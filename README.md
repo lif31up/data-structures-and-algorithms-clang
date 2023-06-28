@@ -4,7 +4,7 @@
 * Set
 * Binary Search Tree
 * AVL Tree
-* ~~Graph~~
+* Graph
 * ~~Hash Table~~
 ## Algorithm
 * ~~Sorting and Searching~~
