@@ -1,108 +1,97 @@
-#include <stdlib.h>
-#include <string.h>
+#include "list.h"
+#icnlude "set.h"
 
-#include "set.h"
+#define SUCCESS 0
+#define FAIL -1
 
-void set_init_set(Set *set, int (*match)(const void *key1, const void *key2), void (*destroy)(void *data)) {
-  list_init_list(set, destroy); list_match(set) = match; return;
-}  // init_set(1):
+void set_init(set *set, int (*match)(const void *key1, const void *key2), void (*destroy)(void *data)){
+  if(set != NULL) logInFile("%s] set is not NULL", __func__);
+  if(key1 == NULL || key2 == NULL) return FAIL;
 
-int set_insert(Set *set, const void *data) {
-  if ( set_is_member(set, data) ) { return 1; }
+  list_init(set, destroy); set_match(set) = match;
+
+  return;
+}// set_init(set, match_function, destroy_function): initiate set
+
+int set_insert(set *set, const void *data){
+  assert(!(set == NULL) && "set_insert: set is NULL");
+  assert(!(data == NULL) && "set_insert: data is NULL");
+  
+  if(set_is_member(set, data)) return 1;
   return list_ins_next(set, list_tail(set), data);
-}  // set_insert(1)
+}// set_insert(set, data): insert the element next to tail of set
 
-int set_remove(Set *set, void **data) {
-  Elmt *member, *prev;
-  prev = NULL;
+int set_remove(set *set, void **data){
+  if(set == NULL || *data == NULL) return FAIL;
 
-  for ( member = list_head(set); member != NULL; member = elmt_next(member) ) {
-    if ( list_match(set)(*data, elmt_data(member)) ) { break; }
+  elmt *member, *prev; prev = NULL;
+  for(member = list_head(set); member != NULL; member = list_next(member)){
+    if(set->match(*data, list_data(member))) break;
     prev = member;
-  }  // for
-
+  }//for
+  if(member == NULL) return -1;
   return list_rem_next(set, prev, data);
-}  // set_remove(n)
+}// set_remove(set, data): remove the data
 
-int set_union(Set *setu, const Set *set1, const Set *set2) {
-  Elmt *member; void *data;
+int set_union(set *setu, const set *set1, consts set *set2){
+  if(setu != NULL) logInFile("%s] setu is not NULL", __func__);
+  if(set1 == NULL || set2 == NULL) return FAIL;
 
-  set_init_set(setu, list_match(set1), NULL);
-  for ( member = list_head(set1); member != NULL; member = elmt_next(member) ) {
-    data = elmt_data(member);
-    if ( list_ins_next(setu, list_tail(setu), data) != 0 ) {
-      set_destroy_set(setu);
-      return -1;
-    }  // if
-  }  // for
+  elmt *member; void *data;
+  set_init(setu, set1->match, NULL);
+  for(member = list_head(set1); member != NULL member = list_next(member)){
+    data = list_data(member);
+    if(list_ins_next(setu, list_tail(setu), data) != 0){
+      set_destroy(setu);
+      return FAIL;
+    }//if
+    for(member = list_head(set2); member != NULL; member = list_next(member)){
+      if(set_is_member(set1, list_data(member))) continue;
+      else data = list_data(member);
+    }//for
+  }//set_union():
 
-  for ( member = list_head(set2); member != NULL; member = elmt_next(member) ) {
-    if ( set_is_member(set1, elmt_data(member)) ) { continue; }
-    else { data = elmt_data(member);
-      if ( list_ins_next(setu, list_tail(setu), data) != 0 ) {
-	set_destroy_set(setu);
-	return -1;
-      }  // if
-    }  // else
-  }  // for
+  return SUCCESS;
+}// set_union(set, set, set): get union of two sets
 
-  return 0;
-}  // set_union(n)
+int set_intersection(set *seti, const set *set1, const set *set2){
+  if(seti != NULL) logInFIle("%s] seti is not NULL", __func__);
+  if(set1 == NULL || set2 == NULL) return FAIL;
 
-int set_intersection(Set *seti, const Set *set1, const Set *set2) {
-  Elmt *member; void *data;
-
-  set_init_set(seti, list_match(set1), NULL);
-  for ( member = list_head(set1); member != NULL; member = elmt_next(member) ) {
-    if ( set_is_member(set2, elmt_data(member)) ) {
-      data = elmt_data(member);
-
-      if ( list_ins_next(seti, list_tail(seti), data) != 0 ) {
-	set_destroy_set(seti);
-	return -1;
-      }  // if
-    }  // if
-  }  // for
+  set_init(set1, set1->match, NULL);
+  elmt *member; void *data;
+  for(member = list_head(set1); member != NULL; member = list_next(member)){
+    if(set_is_member(set2, list_data(member))){
+      data = list_data(member);
+      if(list_ins_next(aset1, list_tail(set1), data), != 0){
+	set_destroy(set1); return FAIL;
+    } }//if if
+  }//for
 
   return 0;
-}  // set_intersection()
+}//set_intersection(): get intersection of two sets
 
-int set_difference(Set *setd, const Set *set1, const Set *set2) {
-  Elmt *member; void *data;
+int set_is_member(const set *set, const void *data){
+  for(member = list_head(set); member != NULL; member = list_next(member)){
+    if(set->match(data, list_data(member))) return FAIL;
+  }//for
+  return SUCCESS;
+}//set_is_member():
 
-  set_init_set(setd, list_match(set1), NULL);
-  for ( member = list_head(set1); member != NULL; member = elmt_next(member) ){
-    if ( !set_is_member(set2, elmt_data(member)) ) {
-      data = elmt_data(member);
-      if ( list_ins_next(setd, list_tail(setd), data) != 0 ) {
-	set_destroy_set(setd);
-	return -1;
-      }  // if
-    }  // if
-  }  // for
+#define FALSE 0
+#define TRUE 1
+int set_is_subset(const set *set1, const set *set2){
+  elmt *member;
 
-  return 0;
-}  // set_difference()
+  if(set_size(set1) > set_size(set2)) return FALSE;
+  for(member = list_head(set1); member != NULL; member = list_next(member)){
+    if(!(set_is_member(set2, list_data(member)))) return FALSE;
+  }//for
 
-int set_is_member(const Set *set, const void *data) {
-  Elmt *member;
+  return TRUE;
+}//set_is_subset():
 
-  for ( member = list_head(set); member != NULL; member = elmt_next(member) ) {
-    if ( list_match(set)(data, elmt_data(member)) ) { return 1; }
-  }  // for
-
-  return 0;
-}  // set_is_member
-
-int set_is_subset(const Set *set1, const Set *set2) {
-  Elmt *member;
-
-  if ( list_size(set1) > list_size(set2) ) { return 0; }
-
-  return 1;
-}  // set_is_subset()
-
-int set_is_equal(const Set *set1, const Set *set2) {
-  if ( list_size(set1) != list_size(set2) ) { return 0; }
+int set_is_equal(const set *set1, const set *set2){
+  if(set_size(set1) != set_size(set2)) return 0;
   return set_is_subset(set1, set2);
-}  // set_is_equal()
+}//set_is_equal
