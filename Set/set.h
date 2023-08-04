@@ -4,9 +4,10 @@
 #include <stdlib.h>
 #include "list.h"
 
-typedef List Set;
+typedef List set;
 
 #define set_size(set) (set->size)
+
 void set_init_set(set *set, int (*match)(const void *key1, const void *key2), void (*destroy)(void *data));
 #define set_destroy_set list_destroy_list
 int set_insert(Set *set, const void *data);
