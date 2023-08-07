@@ -8,7 +8,7 @@ class set extends list{
 
 function set_is_member(set, data){
   let return_value = false;
-
+  
   let curr = set.head; let cnt = 0;
   while(curr !== null){
     if(set.match(curr.data, data)){ return_value = true; break; }
