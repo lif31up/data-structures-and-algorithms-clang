@@ -63,7 +63,7 @@ int set_intersection(set *seti, const set *set1, const set *set2){
   for(member = list_head(set1); member != NULL; member = list_next(member)){
     if(set_is_member(set2, list_data(member))){
       data = list_data(member);
-      if(list_ins_next(aset1, list_tail(set1), data), != 0){
+      if(list_ins_next(set1, list_tail(set1), data) != 0){
 	set_destroy(set1); return FAIL;
     } }//if if
   }//for
