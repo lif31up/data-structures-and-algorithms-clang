@@ -48,3 +48,33 @@ function bst_ins_right(tree, node, data){
   tree.size++;
   return return_value;
 }//bst_ins_right
+function bst_rem_left(tree, node){
+  if(tree.size === 0){ return ERROR.FAIL_INIT; }
+
+  let position;
+  if(node === null){ position = tree.root; }
+  else{ position = node.left; }
+
+  if(position != null){
+    bst_rem_left(tree, position); bst_rem_right(tree, position);
+    tree.destroy(position.data); delete position;
+    tree.size--;
+  }//if
+
+  return ERROR.SUCCESS;
+}// bst_rem_left
+function bst_rem_right(tree, node){
+  if(tree.size === 0){ return ERROR.FAIL; }
+
+  let position;
+  if(node === null){ position = tree.root; }
+  else{ position = node.right; }
+
+  if(position !== null){
+    bst_rem_left(tree, position); bst_rem_right(tree, position);
+    tree.destroy(position.data); delete position;
+    tree.size--;
+  }//if
+
+  return ERROR.SUCCESS;
+}//bst_rem_right(tree, node):
