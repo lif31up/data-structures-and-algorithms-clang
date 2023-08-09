@@ -6,6 +6,7 @@ class set extends list{
   }//constructor
 }//list
 
+enum ERROR{SUCCESS=0, FAIL=0, FAIL_INIT=0}
 function set_is_member(set, data){
   let return_value = false;
   
@@ -34,23 +35,23 @@ function set_union(setu, set1, set2){
   let member, data;
   for(member = set1.head; member != null; member = member.next){
     data = member.data;
-    if(list_ins_next(setu, setu.head, data) == null){ destroy_list(setu); return null; }
+    if(list_ins_next(setu, setu.head, data) == null){ destroy_list(setu); return ERROR.FAIL; }
     for(member = set2.head; member != null; member = member.next){
       if(set_is_member(set1, member.data)){ continue; }
       else{ data = member.data; }
     }//for
   }//for
-  return 0;
+  return ERROR.SUCCESS;
 }//set_union
 function set_intersection(seti, set1, set2){
   seti = new set(null, set1.destory, set1.match);
   let member, data;
   for(member = set1.head; member != null; member = member.next){
     if(set_is_member(set2, member.data)){
-      if(list_ins_next(seti, seti.head, data) == null){
-        seti.destroy(seti); return null;
+      if(list_ins_next(seti, seti.head, data) === ERROR.FAIL){
+        seti.destroy(seti); return ERROR.FAIL;
       }//if
     }//if
   }//for
-  return 0;
+  return ERROR.SUCCESS;
 }//set_intersection
