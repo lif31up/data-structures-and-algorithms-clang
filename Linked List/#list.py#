@@ -1,8 +1,0 @@
-class node(data):
-    this.next = None
-    this.data = data
-#node
-class tree(head, destroy):
-    this.head = head
-    this.destroy = tree
-#tree
