@@ -1,4 +1,4 @@
-l#include "BST.h"
+#include "BST.h"
 
 #include <stdio.h>
 #include <string.h>

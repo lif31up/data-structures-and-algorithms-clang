@@ -1,3 +1,5 @@
+from linked_list import LinkedList, Element
+
 class Set(LinkedList):
   def is_member(self, data):
     buffer, flag = self.head, False
@@ -8,6 +10,7 @@ class Set(LinkedList):
     if buffer is None: return None
     return buffer
   # is_member(): return None or element front of target
+
   def set_ins(self, data):
     if self.is_member(data): return 1
     buffer = self.head.next
@@ -16,6 +19,7 @@ class Set(LinkedList):
     self.size += 1
     return 0
   # set_ins()
+
   def set_rem(self, data):
     target = self.is_member(data)
     if target is None: return 1
