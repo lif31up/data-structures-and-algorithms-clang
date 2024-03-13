@@ -34,9 +34,9 @@ int list_ins_next(list *list, elmt *element, const void *data){
   }//if
   else{
     if(elmt_next(element) == NULL) list_tail(list) = new_element;
-    elmt_next(element) = elmt_next(element);
+    elmt_next(element) = elmt_next(new_element);
   }//else
-  list_size(list);
+  list_size(list)++;
 
   return 0;
 }//list_ins_next():
@@ -48,7 +48,7 @@ int list_rem_next(list *list, elmt *element, void **data){
   if(element == NULL){
     *data = list_head(list); old_element = list_head(list);
     list_head(list) = list->head->next;
-    if(list_size(list) == 1) list_tail(list) = NULL;
+    if(list_size(list) == 1) list_tail(list) = list_head(list);
   }//if
   else{
     if(elmt_next(element) == NULL) return FAIL;
