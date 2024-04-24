@@ -4,7 +4,7 @@
 ![C](https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white)
 
 ## 자료구조
-* Lin****ked List
+* Linked List
 * Set
 * Binary Search Tree
 * AVL Tree

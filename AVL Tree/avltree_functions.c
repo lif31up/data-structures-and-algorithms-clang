@@ -5,10 +5,10 @@
 
 void avl_rotate_left(AvlNode **node) {
   AvlNode *left, *grandchild;
-
+    
   left = avlNode_left( (*node) );
   if ( ( (AvlNode *)avlNode_data(left) )->factor == LEFT ) {
-    // LL Roatation
+    // LL Rotation
     avlNode_left( (*node) ) = avlNode_right(left);
     avlNode_right(left) = (*node);
     ( (AvlNode *)avlNode_data( (*node) ) )->factor = CENTER;
