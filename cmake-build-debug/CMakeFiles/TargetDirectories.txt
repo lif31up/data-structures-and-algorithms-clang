@@ -1,0 +1,3 @@
+C:/Projects/Programming/github/data-structures-and-algorithms-clang/cmake-build-debug/CMakeFiles/data_structures_and_algorithms_clang.dir
+C:/Projects/Programming/github/data-structures-and-algorithms-clang/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Projects/Programming/github/data-structures-and-algorithms-clang/cmake-build-debug/CMakeFiles/rebuild_cache.dir
