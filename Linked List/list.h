@@ -7,6 +7,7 @@ typedef struct ListElement {
   void *data;
   struct ListElement *next;
 } elmt;
+
 typedef struct LinkedList {
   int size;
   elmt *head, *tail;
@@ -23,7 +24,7 @@ typedef struct LinkedList {
 #define list_destroy(list) (list->destroy)
 
 void init_list(list *list, void (*destroy)(void *data));
-void list_destroy(list *list);
+void destroy_list(list *list);
 int list_ins_next(list *list, elmt *element, const void *data);
 int list_rem_next(list *list, elmt *element, void **data);
 
